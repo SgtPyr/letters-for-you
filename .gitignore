@@ -1,0 +1,9 @@
+# Local backups
+backups/
+
+# Temporary safety copies
+*.before-json
+
+# Python cache
+__pycache__/
+*.pyc
