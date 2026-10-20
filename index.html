@@ -1,51 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#eee5d5">
-    <title>A Little Notebook for You</title>
-    <link rel="stylesheet" href="css/style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080e18">
+  <meta name="description" content="A little collection of stories, thoughts, and reminders made just for you.">
+  <title>A Little Notebook for You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-<header class="topbar">
-  <div class="brand">little things, kept here.</div>
-  <div class="top-caption">A personal notebook</div>
-</header>
+  <div class="app-shell">
 
-<main>
-  <section class="intro">
-    <h1>A little book for you.</h1>
-    <p>Some thoughts deserve their own pages.</p>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" aria-label="A Little Notebook for You home">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 12C18 6 10 7 5 10v27c7-3 13-2 19 3m0-28c6-6 14-5 19-2v27c-7-3-13-2-19 3M24 12v28"/>
+        </svg>
+        <span>A Little Notebook<br>for You</span>
+      </a>
+
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3z"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-item" data-view="chapters">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7C8 3 4 4 2 5v15c4-2 7-1 10 2m0-15c4-4 8-3 10-2v15c-4-2-7-1-10 2M12 7v15"/></svg>
+          <span>Chapters</span>
+          <span class="nav-count" id="chapterCount">63</span>
+        </button>
+        <button class="nav-item" data-view="about">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z"/></svg>
+          <span>About</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.8 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.8-1l-1.7.7-1.4-2.4L7.1 15a8 8 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.8-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.8 1l1.7-.7 1.4 2.4-1.4 1.1a8 8 0 0 1-.1 2z"/></svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Some things are<br>better read slowly.</p>
+        <span class="footer-heart">♡</span>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="mobile-header">
+        <button class="icon-button" id="menuBtn" aria-label="Open navigation">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <span>A Little Notebook</span>
+        <span class="mobile-heart">♡</span>
+      </header>
+
+      <section class="release-notice" id="releaseNotice" hidden>
+        <div class="release-symbol" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M24 2 29 18 46 24 29 30 24 46 19 30 2 24 19 18z"/></svg>
+        </div>
+        <div class="release-copy">
+          <span class="release-eyebrow">✦ &nbsp; New chapter released</span>
+          <h2 id="releaseTitle">Something new is waiting.</h2>
+          <p id="releaseDescription"></p>
+        </div>
+        <button class="release-button" id="readReleaseBtn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7C8 3 4 4 2 5v15c4-2 7-1 10 2m0-15c4-4 8-3 10-2v15c-4-2-7-1-10 2M12 7v15"/></svg>
+          <span>Read new chapters</span>
+          <span aria-hidden="true">→</span>
+        </button>
+        <button class="release-dismiss" id="dismissReleaseBtn" type="button" aria-label="Dismiss announcement">×</button>
+      </section>
+
+      <section class="view active" id="homeView">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">A PLACE JUST FOR YOU</p>
+          <h1>Welcome back <span>♡</span></h1>
+          <p class="hero-description">
+            A collection of little stories,<br>
+            written for you. Take your time,<br>
+            read what you like, and come back<br>
+            whenever you feel like it.
+          </p>
+          <p class="hero-signature">You're always welcome here.</p>
+          <span class="signature-heart">♡</span>
+        </div>
+
+        <section class="recent-section">
+          <div class="section-heading">
+            <div>
+              <p class="section-eyebrow">YOUR LITTLE LIBRARY</p>
+              <h2>Recently added</h2>
+            </div>
+            <button class="text-link" data-open-view="chapters">Explore all chapters <span>→</span></button>
+          </div>
+          <div class="recent-grid" id="recentGrid"></div>
+        </section>
+
+        <div class="home-bottom-note">
+          <span>Same notebook.</span>
+          <span>New pages.</span>
+          <span class="bottom-heart">♡</span>
+        </div>
+      </section>
+
+      <section class="view" id="chaptersView">
+        <div class="page-heading">
+          <p class="section-eyebrow">THE LITTLE THINGS WE KEEP</p>
+          <h1>All chapters <span class="heading-count" id="headingCount">63</span></h1>
+          <p>Every page has a place here. Take your time.</p>
+        </div>
+        <div class="chapter-tools">
+          <label class="search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+            <input id="chapterSearch" type="search" placeholder="Find a chapter..." autocomplete="off">
+          </label>
+          <span class="chapter-total" id="chapterTotal">63 chapters</span>
+        </div>
+        <div class="chapter-grid" id="chapterGrid"></div>
+        <p class="empty-state" id="emptyState" hidden>No chapters match that search.</p>
+      </section>
+
+      <section class="view" id="readerView">
+        <div class="reader-toolbar">
+          <button class="back-button" id="backToChapters">← All chapters</button>
+          <span id="readerPosition">Chapter 01</span>
+        </div>
+        <article class="reader-paper">
+          <div class="reader-decoration">for you, always</div>
+          <p class="reader-eyebrow" id="readerEyebrow">A NOTE FOR YOU</p>
+          <h1 id="readerTitle">A little chapter</h1>
+          <div class="reader-divider"><span>♡</span></div>
+          <div class="reader-body" id="readerBody"></div>
+          <div class="reader-footer">Written with care. <span>♡</span></div>
+        </article>
+        <div class="reader-navigation">
+          <button class="reader-nav-button" id="previousChapter">← Previous</button>
+          <span id="readerPageCount"></span>
+          <button class="reader-nav-button" id="nextChapter">Next chapter →</button>
+        </div>
+      </section>
+
+      <section class="view simple-view" id="aboutView">
+        <p class="section-eyebrow">A SMALL NOTE ABOUT THIS PLACE</p>
+        <h1>Made with care. <span>♡</span></h1>
+        <p>This little notebook is a collection of thoughts, stories, and reminders saved here for you.</p>
+        <p>There's no rush to read everything. Open a page whenever you feel like it, and come back whenever you need to.</p>
+        <p class="about-signature">Same notebook. New pages.</p>
+      </section>
+
+      <section class="view simple-view" id="settingsView">
+    <p class="section-eyebrow">MAKE YOURSELF AT HOME</p>
+    <h1>Settings</h1>
+
+    <h2 class="settings-heading">Reading preferences</h2>
+
+    <div class="setting-row">
+      <div>
+        <strong>Font style</strong>
+        <p>Choose a comfortable reading font.</p>
+      </div>
+      <select id="readerFont" aria-label="Reading font">
+        <option value="serif">Serif</option>
+        <option value="sans">Sans serif</option>
+        <option value="handwritten">Handwritten</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Text size</strong>
+        <p>Adjust the chapter text size.</p>
+      </div>
+      <div class="size-controls">
+        <button id="textSmaller" type="button" aria-label="Decrease text size">A−</button>
+        <span id="fontSizeValue">18px</span>
+        <button id="textLarger" type="button" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Line spacing</strong>
+        <p>Give each line more or less room.</p>
+      </div>
+      <select id="readerLineSpacing" aria-label="Line spacing">
+        <option value="1.6">Compact</option>
+        <option value="1.9" selected>Comfortable</option>
+        <option value="2.2">Relaxed</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Reading width</strong>
+        <p>Choose the width of the reading page.</p>
+      </div>
+      <select id="readerWidth" aria-label="Reading width">
+        <option value="narrow">Narrow</option>
+        <option value="comfortable" selected>Comfortable</option>
+        <option value="wide">Wide</option>
+      </select>
+    </div>
+
+    <h2 class="settings-heading">Appearance</h2>
+
+    <div class="setting-row">
+      <div>
+        <strong>Notebook theme</strong>
+        <p>Change the reading page, not the dark sidebar.</p>
+      </div>
+      <select id="themeSelect" aria-label="Notebook theme">
+        <option value="midnight">Midnight</option>
+        <option value="paper">Warm paper</option>
+        <option value="navy">Deep navy</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Accent color</strong>
+        <p>Choose a small personal detail.</p>
+      </div>
+      <select id="accentSelect" aria-label="Accent color">
+        <option value="cyan">Soft cyan</option>
+        <option value="rose">Dusty rose</option>
+        <option value="amber">Warm amber</option>
+      </select>
+    </div>
+
+    <h2 class="settings-heading">Bookmarks</h2>
+    <p>Save chapters you want to return to.</p>
+    <div id="bookmarkEmpty">No bookmarked chapters yet.</div>
+    <div id="bookmarkList"></div>
+
+    <h2 class="settings-heading">Personal touches</h2>
+
+    <div class="setting-row">
+      <div>
+        <strong>Favorite quote</strong>
+        <p>Keep a line from this notebook close.</p>
+      </div>
+    </div>
+    <textarea id="favoriteQuote" rows="3" maxlength="500" placeholder="Write or paste your favorite quote..."></textarea>
+    <button class="setting-button" id="saveQuote" type="button">Save favorite quote</button>
+    <p id="savedQuote"></p>
+
+    <div class="setting-row">
+      <div>
+        <strong>Opening note</strong>
+        <p>A small message to see when you visit.</p>
+      </div>
+    </div>
+    <textarea id="openingNote" rows="3" maxlength="500" placeholder="Write a little note..."></textarea>
+    <label class="setting-checkbox">
+      <input id="showOpeningNote" type="checkbox" checked>
+      Show this note once per day
+    </label>
+    <button class="setting-button" id="saveOpeningNote" type="button">Save opening note</button>
+
+    <h2 class="settings-heading">Chapter announcements</h2>
+    <div class="setting-row">
+      <div>
+        <strong>Remember announcements</strong>
+        <p>Hide an announcement after opening its new chapters.</p>
+      </div>
+      <button class="setting-button" id="resetReleaseSeen" type="button">Reset announcements</button>
+    </div>
   </section>
 
-  <div class="book-wrap">
-    <div class="book">
-      <article class="page" id="page">
-        <div class="paper-lines"></div>
-        <div class="margin-line"></div>
-        <div class="page-inner" id="pageContent"></div>
-      </article>
-    </div>
+      <footer class="main-footer">
+        <span>A little notebook, made with care.</span>
+        <span>♡</span>
+      </footer>
+    </main>
   </div>
 
-  <nav class="controls" aria-label="Notebook page controls">
-    <button class="btn" id="prevBtn" type="button">← Previous</button>
-    <button class="btn primary" id="nextBtn" type="button">Open notebook →</button>
-    <div class="progress" id="progress">Cover</div>
-  </nav>
-
-  <div class="tools">
-    <button class="btn" id="contentsBtn" type="button">Contents</button>
-  </div>
-
-  <p class="hint">Your little corner of the world, one page at a time.</p>
-</main>
-
-<footer>Made with care, just for you.</footer>
-
-<script src="js/app.js"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/app.js"></script>
 </body>
 </html>
