@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
 
 :root {
   --bg: #0b111b;
@@ -1327,4 +1330,89 @@ width: 100%;
 #bookmarkList .bookmark-item {
 align-items: stretch;
 }
+}
+
+/* =========================================
+   LETTERS FOR YOU — TYPOGRAPHY UPDATE
+   ========================================= */
+
+:root {
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-handwritten: "Caveat", cursive;
+}
+
+/* Main headings and chapter titles */
+.brand,
+.release-copy h2,
+.hero-copy h1,
+.section-heading h2,
+.page-heading h1,
+.card-title,
+.art-number,
+.reader-paper h1,
+.simple-view h1 {
+  font-family: var(--font-heading);
+}
+
+/* Reading text: more comfortable for longer passages */
+.reader-body,
+.simple-view > p:not(.section-eyebrow) {
+  font-family: var(--font-heading);
+}
+
+/* Handwritten notebook details */
+.hero-signature,
+.home-bottom-note,
+.reader-decoration,
+.reader-footer,
+.sidebar-footer {
+  font-family: var(--font-handwritten);
+}
+
+/* Keep interface text crisp and readable */
+body,
+button,
+input,
+.nav-item,
+.release-button,
+.text-link,
+.card-label,
+.card-number,
+.card-excerpt,
+.card-link,
+.card-bottom,
+.search-box input,
+.chapter-total,
+.reader-toolbar,
+.reader-navigation,
+.setting-button {
+  font-family: var(--font-body);
+}
+
+/* Larger, more editorial chapter headings */
+.hero-copy h1 {
+  font-weight: 500;
+  letter-spacing: -0.6px;
+}
+
+.section-heading h2,
+.page-heading h1,
+.reader-paper h1,
+.simple-view h1 {
+  font-weight: 500;
+}
+
+.card-title {
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Preserve the handwritten accents */
+.hero-copy h1 span {
+  font-family: var(--font-handwritten);
+}
+
+.reader-footer {
+  font-size: 21px;
 }

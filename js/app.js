@@ -372,9 +372,12 @@ function applyPreferences() {
   const paper = $(".reader-paper");
 
   const fontFamilies = {
-    serif: 'Georgia, "Times New Roman", serif',
-    sans: 'Arial, Helvetica, sans-serif',
-    handwritten: '"Comic Sans MS", "Segoe Print", cursive'
+    serif: '"Cormorant Garamond", Georgia, serif',
+    sans: '"DM Sans", Arial, sans-serif',
+    handwritten: '"Caveat", cursive',
+    georgia: 'Georgia, "Times New Roman", serif',
+    elegant: '"Playfair Display", Georgia, serif',
+    classic: '"Lora", Georgia, serif'
   };
 
   if (body) {
