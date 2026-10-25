@@ -120,20 +120,49 @@ function storyId(story, index) {
   return String(story.id ?? story.slug ?? story.number ?? index + 1);
 }
 
+
+const REMOTE_DATA = {
+  stories: "https://sgtpyr.github.io/letters-for-you/stories/stories.json",
+  release: "https://sgtpyr.github.io/letters-for-you/releases/releases.json"
+};
+
+async function loadRemoteOrCached(remoteUrl, cacheKey, bundledUrl) {
+  try {
+    const response = await fetch(remoteUrl, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    localStorage.setItem(cacheKey, JSON.stringify(data));
+    return data;
+  } catch (error) {
+    console.warn("Online update unavailable; trying saved data:", error);
+  }
+
+  try {
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) return JSON.parse(cached);
+  } catch (error) {
+    console.warn("Saved data could not be read:", error);
+  }
+
+  const response = await fetch(bundledUrl, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Bundled data returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
 async function loadStories() {
   const grid = $("#chapterGrid");
   if (grid) grid.textContent = "Loading chapters...";
 
   try {
-    const response = await fetch("stories/stories.json", {
-      cache: "no-store"
-    });
+    const data = await loadRemoteOrCached(
+      REMOTE_DATA.stories,
+      "littleNotebook.remoteStories.v1",
+      "stories/stories.json"
+    );
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
     const list = Array.isArray(data)
       ? data
       : data.stories || data.chapters || data.items || [];
@@ -154,14 +183,11 @@ async function loadStories() {
     console.error("Could not load stories:", error);
 
     if (grid) {
-      grid.textContent =
-        "The chapters could not be loaded. Check stories/stories.json.";
+      grid.textContent = "The chapters could not be loaded. Check your connection and try again.";
     }
 
     const recent = $("#recentGrid");
-    if (recent) {
-      recent.textContent = "Your chapters could not be loaded.";
-    }
+    if (recent) recent.textContent = "Your chapters could not be loaded.";
   }
 }
 
@@ -597,15 +623,13 @@ function showOpeningNote() {
 
 async function loadRelease() {
   try {
-    const response = await fetch("releases/releases.json", {
-      cache: "no-store"
-    });
+    const data = await loadRemoteOrCached(
+      REMOTE_DATA.release,
+      "littleNotebook.remoteRelease.v1",
+      "releases/releases.json"
+    );
 
-    if (!response.ok) {
-      throw new Error(`Release file returned HTTP ${response.status}`);
-    }
-
-    const release = await response.json();
+    const release = data;
 
     if (!release || !release.id || !Array.isArray(release.chapterNumbers)) {
       return;
