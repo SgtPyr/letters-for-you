@@ -42,8 +42,14 @@ jobs:
 
       - name: Package simulator app
         run: |
-          cd build/ios/Build/Products/Debug-iphonesimulator
-          zip -r "$GITHUB_WORKSPACE/LettersForYou-iOS-Simulator.zip" LettersForYou.app
+          APP_PATH="$(find build/ios/Build/Products -type d -name '*.app' -print -quit)"
+          if [ -z "$APP_PATH" ]; then
+            echo "No .app bundle found in the build output."
+            find build/ios/Build/Products -maxdepth 4 -print
+            exit 1
+          fi
+          echo "Packaging: $APP_PATH"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$GITHUB_WORKSPACE/LettersForYou-iOS-Simulator.zip"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
