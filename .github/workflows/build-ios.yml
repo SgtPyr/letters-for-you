@@ -51,6 +51,35 @@ jobs:
           echo "Packaging: $APP_PATH"
           ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$GITHUB_WORKSPACE/LettersForYou-iOS-Simulator.zip"
 
+      - name: Build for iPhone device
+        run: |
+          xcodebuild \
+            -project ios-app/LettersForYou.xcodeproj \
+            -scheme LettersForYou \
+            -sdk iphoneos \
+            -configuration Debug \
+            -derivedDataPath build/ios-device \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package iPhone device build
+        run: |
+          APP_PATH="$(find build/ios-device/Build/Products -type d -name '*.app' -print -quit)"
+          if [ -z "$APP_PATH" ]; then
+            echo "No iPhone app bundle found."
+            find build/ios-device/Build/Products -maxdepth 4 -print
+            exit 1
+          fi
+          echo "Packaging device build: $APP_PATH"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$GITHUB_WORKSPACE/LettersForYou-iPhone-Unsigned.zip"
+
+      - name: Upload iPhone device build
+        uses: actions/upload-artifact@v4
+        with:
+          name: LettersForYou-iPhone-Unsigned
+          path: LettersForYou-iPhone-Unsigned.zip
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
