@@ -72,6 +72,27 @@ jobs:
           echo "Packaging device build: $APP_PATH"
           ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$GITHUB_WORKSPACE/LettersForYou-iPhone-Unsigned.zip"
 
+      - name: Package iPhone IPA
+        run: |
+          APP_PATH="$(find build/ios-device/Build/Products -type d -name '*.app' -print -quit)"
+          if [ -z "$APP_PATH" ]; then
+            echo "No iPhone app bundle found."
+            exit 1
+          fi
+
+          mkdir -p build/ipa/Payload
+          cp -R "$APP_PATH" build/ipa/Payload/
+          cd build/ipa
+          zip -r "$GITHUB_WORKSPACE/LettersForYou-Unsigned.ipa" Payload
+
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: LettersForYou-Unsigned-IPA
+          path: LettersForYou-Unsigned.ipa
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Upload iPhone device build
         uses: actions/upload-artifact@v4
         with:
