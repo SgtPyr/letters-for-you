@@ -1,0 +1,54 @@
+name: Build iOS App
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "ios-app/**"
+      - ".github/workflows/build-ios.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-ios:
+    runs-on: macos-15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.4.app
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: |
+          cd ios-app
+          xcodegen generate
+
+      - name: Build iOS Simulator app
+        run: |
+          xcodebuild \
+            -project ios-app/LettersForYou.xcodeproj \
+            -scheme LettersForYou \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            -derivedDataPath build/ios \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package simulator app
+        run: |
+          cd build/ios/Build/Products/Debug-iphonesimulator
+          zip -r "$GITHUB_WORKSPACE/LettersForYou-iOS-Simulator.zip" LettersForYou.app
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: LettersForYou-iOS-Simulator
+          path: LettersForYou-iOS-Simulator.zip
+          if-no-files-found: error
+          retention-days: 7
