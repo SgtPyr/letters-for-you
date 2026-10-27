@@ -1,0 +1,62 @@
+/* Unwritten: private notebook overlay. Kept separate from the main notebook styles. */
+.unwritten-overlay {
+  position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center;
+  padding: 18px; background: rgba(3, 7, 13, .88); backdrop-filter: blur(14px);
+}
+.unwritten-overlay[hidden], #unwrittenSetup[hidden], #unwrittenUnlock[hidden],
+#unwrittenWorkspace[hidden] { display: none !important; }
+.unwritten-panel {
+  position: relative; width: min(980px, 100%); max-height: min(92vh, 900px); overflow: auto;
+  padding: clamp(22px, 4vw, 42px); border: 1px solid rgba(121,228,244,.19);
+  border-radius: 18px; background: radial-gradient(ellipse at top right, rgba(121,228,244,.08), transparent 42%), #101925;
+  color: #f1eee8; box-shadow: 0 24px 90px rgba(0,0,0,.5);
+}
+.unwritten-close { position: absolute; top: 14px; right: 16px; border: 0; background: transparent; color: #9ba6b4; font-size: 28px; cursor: pointer; }
+.unwritten-eyebrow { margin: 0 0 8px; color: #79e4f4; font-size: 10px; letter-spacing: .2em; font-weight: 700; }
+#unwrittenHeading { margin: 0; font: 500 clamp(32px, 5vw, 48px)/1.1 "Playfair Display", Georgia, serif; }
+#unwrittenHeading span { color: #c9a878; font-size: .7em; }
+.unwritten-intro { color: #aab5c2; margin: 10px 0 26px; }
+.unwritten-auth { max-width: 480px; margin: 26px auto; padding: 22px; border: 1px solid rgba(255,255,255,.09); border-radius: 12px; background: rgba(255,255,255,.025); }
+.unwritten-auth h2 { font: 500 23px "Playfair Display", Georgia, serif; margin: 0 0 8px; }
+.unwritten-auth p, .unwritten-footnote { color: #9ba6b4; line-height: 1.7; }
+.unwritten-panel label { display: grid; gap: 8px; color: #c4ced8; font-size: 12px; margin: 14px 0; }
+.unwritten-panel input, .unwritten-panel textarea {
+  width: 100%; padding: 12px 13px; border: 1px solid rgba(185,205,225,.16); border-radius: 8px;
+  background: #0b121c; color: #f1eee8; font: 14px/1.6 "DM Sans", sans-serif;
+}
+.unwritten-panel textarea { resize: vertical; min-height: 210px; }
+.unwritten-panel button, .unwritten-import {
+  border: 1px solid rgba(185,205,225,.16); border-radius: 8px; padding: 10px 13px;
+  background: #172333; color: #e9eef4; font: 12px "DM Sans", sans-serif; cursor: pointer;
+}
+.unwritten-panel .unwritten-primary { background: #173541; border-color: rgba(121,228,244,.3); color: #a9f0fa; }
+.unwritten-auth .unwritten-primary { width: 100%; margin-top: 8px; }
+.unwritten-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.unwritten-import { display: inline-flex; align-items: center; margin: 0; }
+.unwritten-import input { display: none; }
+.unwritten-search { max-width: 460px; margin: 20px 0 !important; }
+.unwritten-columns { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1.7fr); gap: 22px; }
+.unwritten-entry-list { display: grid; align-content: start; gap: 7px; }
+.unwritten-entry-button { display: grid; gap: 5px; text-align: left; width: 100%; }
+.unwritten-entry-button strong { font-weight: 600; overflow-wrap: anywhere; }
+.unwritten-entry-button small { color: #8e9bab; }
+.unwritten-entry-button[aria-current="true"] { border-color: rgba(121,228,244,.42); background: #142a35; }
+.unwritten-editor { min-width: 0; }
+.unwritten-status, .unwritten-message { color: #a9b7c6; font-size: 12px; line-height: 1.6; }
+.unwritten-message { margin-top: 16px; color: #a9f0fa; }
+.unwritten-footnote { margin: 24px 0 0; font-size: 11px; }
+@media (max-width: 650px) {
+  .unwritten-panel { padding: 26px 18px; }
+  .unwritten-columns { grid-template-columns: 1fr; }
+  .unwritten-entry-list { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .unwritten-entry-button { min-width: 0; }
+  .unwritten-actions > button, .unwritten-import { flex: 1 1 auto; justify-content: center; }
+}
+
+.unwritten-crescent {
+  position: fixed; z-index: 9999; right: 13px; bottom: 10px; width: 25px; height: 25px;
+  padding: 0 !important; border: 0 !important; background: transparent !important;
+  color: rgba(201,168,120,.22) !important; font-size: 18px !important; cursor: default;
+  touch-action: none; user-select: none;
+}
+.unwritten-crescent:focus-visible { outline: 1px solid rgba(201,168,120,.35); }
